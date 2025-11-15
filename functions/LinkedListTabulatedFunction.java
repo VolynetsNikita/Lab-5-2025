@@ -61,7 +61,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Externali
             FunctionNode curOther = other.head.getNext(); // начинаем с первого узла другого списка
 
             while (curThis != this.head) { // пока не вернемся к голове
-                if (Double.compare(curThis.getPoint().getX(), curOther.getPoint().getX()) != 0 || Double.compare(curThis.getPoint().getY(), curOther.getPoint().getY()) != 0) { // сравниваем координаты точек
+                if (!curThis.getPoint().equals(curOther.getPoint())) { // сравниваем координаты точек
                     return false; // если координаты не равны возвращаем false
                 }
                 curThis = curThis.getNext(); // переходим к следующему узлу текущего списка
@@ -69,12 +69,15 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Externali
             }
         }
         else { // если объект другой реализации tabulated function
-            if (this.getPointsCount() != ((TabulatedFunction) o).getPointsCount()) { // сравниваем количество точек
+            TabulatedFunction other = (TabulatedFunction) o;
+            if (this.getPointsCount() != other.getPointsCount()) { // сравниваем количество точек
                 return false; // если разное количество точек возвращаем false
             }
             for (int i = 0; i < pointcount; i++) { // проходим по всем точкам
-                if (Double.compare(this.getPointX(i), ((TabulatedFunction) o).getPointX(i)) != 0 || Double.compare(this.getPointY(i), ((TabulatedFunction) o).getPointY(i)) != 0) { // сравниваем координаты
-                    return false; // если координаты не равны возвращаем false
+                FunctionPoint thisPoint = new FunctionPoint(this.getPointX(i), this.getPointY(i));
+                FunctionPoint otherPoint = new FunctionPoint(other.getPointX(i), other.getPointY(i));
+                if (!thisPoint.equals(otherPoint)) {
+                    return false;
                 }
             }
         }

@@ -32,7 +32,7 @@ public class FunctionPoint{
         if(o == this){ // проверяем что это тот же объект
             return true; // возвращаем true если объекты одинаковые
         }
-        return Double.compare(this.x, ((FunctionPoint) o).x) == 0 && Double.compare(this.y, ((FunctionPoint) o).y) == 0; // сравниваем координаты x и y
+        return Math.abs(this.x - ((FunctionPoint) o).x) < 1e-10 && Math.abs(this.y- ((FunctionPoint) o).y) < 1e-10; // сравниваем координаты x и y
     }
 
     @Override

@@ -54,7 +54,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Externalizable
                 return false; // если разное количество точек возвращаем false
             }
             for (int i = 0; i < point_count; i++) { // проходим по всем точкам массива
-                if (Double.compare(this.point_mass[i].getX(), ((ArrayTabulatedFunction) o).point_mass[i].getX()) != 0 || Double.compare(this.point_mass[i].getY(), ((ArrayTabulatedFunction) o).point_mass[i].getY()) != 0) { // сравниваем координаты точек
+                if (!this.point_mass[i].equals(((ArrayTabulatedFunction) o).point_mass[i])) { // сравниваем координаты точек
                     return false; // если координаты не равны возвращаем false
                 }
             }
@@ -64,8 +64,10 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Externalizable
                 return false; // если разное количество точек возвращаем false
             }
             for (int i = 0; i < point_count; i++) { // проходим по всем точкам
-                if (Double.compare(this.getPointX(i), ((TabulatedFunction) o).getPointX(i)) != 0 || Double.compare(this.getPointY(i), ((TabulatedFunction) o).getPointY(i)) != 0) { // сравниваем координаты через методы интерфейса
-                    return false; // если координаты не равны возвращаем false
+                FunctionPoint thisPoint = new FunctionPoint(this.getPointX(i), this.getPointY(i));
+                FunctionPoint otherPoint = new FunctionPoint(((TabulatedFunction) o).getPointX(i), ((TabulatedFunction) o).getPointY(i));
+                if (!thisPoint.equals(otherPoint)) {
+                    return false;
                 }
             }
         }
